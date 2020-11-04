@@ -1,4 +1,5 @@
 import 'package:clima/services/location.dart';
+import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -7,14 +8,14 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  LocationManager locationManager = LocationManager();
+  WeatherManager weatherManager = WeatherManager();
+
   @override
   void initState() {
     super.initState();
-    locationManager.beginListening(() {
-      print("Unusued callback for now.");
-      print(locationManager.latitude);
-      print(locationManager.longitude);
+    LocationManager().beginListening(() {
+      print(
+          "Callback1 (${LocationManager().latitude}, ${LocationManager().longitude})");
     });
   }
 
@@ -29,9 +30,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // print(await position);
   // }
 
-  void getLocation() {
-    print(locationManager.latitude);
-    print(locationManager.longitude);
+  void updateWeatherInfo() async {
+    await weatherManager.updateWeather(
+        LocationManager().latitude, LocationManager().longitude);
+    print("Outside Temp F = ${WeatherManager().temperature}");
+    print("Outside Icon = ${WeatherManager().weatherIcon}");
+    print("Outside Message = ${WeatherManager().message}");
   }
 
   @override
@@ -41,9 +45,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: RaisedButton(
           onPressed: () {
             //Get the current location
-            getLocation();
+            updateWeatherInfo();
           },
-          child: Text('Get Location'),
+          child: Text('Update Weather Info'),
         ),
       ),
     );
