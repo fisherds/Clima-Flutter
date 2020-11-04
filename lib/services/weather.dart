@@ -9,7 +9,7 @@ class WeatherManager {
   }
 
   static final OPEN_WEATHER_API_KEY = "264c519865aaf19d42cbc39987ae6123";
-  var jsonResponse = null;
+  var jsonResponse;
 
   Future<void> updateWeather(latitude, longitude) async {
     var url =

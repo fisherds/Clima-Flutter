@@ -16,6 +16,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     LocationManager().beginListening(() {
       print(
           "Callback1 (${LocationManager().latitude}, ${LocationManager().longitude})");
+
+      getWeatherInfo();
     });
   }
 
@@ -30,25 +32,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // print(await position);
   // }
 
-  void updateWeatherInfo() async {
+  void getWeatherInfo() async {
     await weatherManager.updateWeather(
         LocationManager().latitude, LocationManager().longitude);
     print("Outside Temp F = ${WeatherManager().temperature}");
     print("Outside Icon = ${WeatherManager().weatherIcon}");
     print("Outside Message = ${WeatherManager().message}");
+
+    Navigator.pushNamed(context, "/location");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            //Get the current location
-            updateWeatherInfo();
-          },
-          child: Text('Update Weather Info'),
-        ),
+        child: Text("Loading"),
       ),
     );
   }
