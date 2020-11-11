@@ -34,7 +34,7 @@ class LocationManager {
     }
   }
 
-  stopListening() {
+  void stopListening() {
     _callbackFcn = null;
   }
 

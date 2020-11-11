@@ -9,11 +9,10 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  WeatherManager weatherManager = WeatherManager();
-
   @override
   void initState() {
     super.initState();
+    print("initState on the loading screen called.");
     LocationManager().beginListening(() {
       print(
           "Callback1 (${LocationManager().latitude}, ${LocationManager().longitude})");
@@ -34,13 +33,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // }
 
   void getWeatherInfo() async {
-    await weatherManager.updateWeather(
-        LocationManager().latitude, LocationManager().longitude);
+    await WeatherManager()
+        .updateWeather(LocationManager().latitude, LocationManager().longitude);
     print("Outside Temp F = ${WeatherManager().temperature}");
     print("Outside Icon = ${WeatherManager().weatherIcon}");
     print("Outside Message = ${WeatherManager().message}");
     LocationManager().stopListening();
-    //Navigator.pushNamed(context, "/location");
+    Navigator.pushNamed(context, "/location");
   }
 
   @override

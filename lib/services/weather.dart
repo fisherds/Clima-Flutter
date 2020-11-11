@@ -17,6 +17,18 @@ class WeatherManager {
         "http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=$latitude&lon=$longitude&appid=$OPEN_WEATHER_API_KEY";
     var response = await http.get(url);
     if (response.statusCode == 200) {
+      //print(response);
+      jsonResponse = convert.jsonDecode(response.body);
+    } else {
+      print("Request failed with status: ${response.statusCode}.");
+    }
+  }
+
+  Future<void> updateWeatherForCity(city) async {
+    var url =
+        "http://api.openweathermap.org/data/2.5/weather?units=imperial&q=$city&appid=$OPEN_WEATHER_API_KEY";
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
       jsonResponse = convert.jsonDecode(response.body);
     } else {
       print("Request failed with status: ${response.statusCode}.");
@@ -61,13 +73,13 @@ class WeatherManager {
 
   double get temperature {
     if (jsonResponse != null) {
-      return jsonResponse["main"]["temp"];
+      return jsonResponse["main"]["temp"].toDouble();
     }
     print("No temp!!!!");
     return 0.0;
   }
 
-  double get cityName {
+  String get cityName {
     return jsonResponse["name"];
   }
 
@@ -98,11 +110,11 @@ class WeatherManager {
 
   String get message {
     if (temperature > 85) {
-      return "It\"s 🍦 time";
+      return "It\'s 🍦 time";
     } else if (temperature > 68) {
       return "Time for shorts and 👕";
     } else if (temperature < 50) {
-      return "You\"ll need 🧣 and 🧤";
+      return "You\'ll need 🧣 and 🧤";
     } else {
       return "Bring a 🧥 just in case";
     }

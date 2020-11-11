@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
       initialRoute: "/loading",
       routes: {
         "/loading": (context) => LoadingScreen(),
+        "/location": (context) => LocationScreen(),
         "/city": (context) => CityScreen(),
-        "/location": (context) => LocationScreen()
       },
       theme: ThemeData.dark(),
       //home: LoadingScreen(),

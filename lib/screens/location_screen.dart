@@ -1,3 +1,4 @@
+import 'package:clima/services/location.dart';
 import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
@@ -30,15 +31,33 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      //Navigator.pushNamed(context, "/loading");
+
+                      await WeatherManager().updateWeather(
+                          LocationManager().latitude,
+                          LocationManager().longitude);
+                      print("Outside Temp F = ${WeatherManager().temperature}");
+                      print("Outside Icon = ${WeatherManager().weatherIcon}");
+                      print("Outside Message = ${WeatherManager().message}");
+                      setState(() {});
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/city");
+                    // onPressed: () {
+                    //   Navigator.pushNamed(context, "/city");
+                    //   setState(() {});
+                    // },
+                    onPressed: () async {
+                      final result =
+                          await Navigator.pushNamed(context, "/city");
+                      if (result == kSetState) {
+                        setState(() {});
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
@@ -52,7 +71,8 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '${WeatherManager().temperature.floor()}°',
+                      // '${WeatherManager().temperature.floor()}°',
+                      '${WeatherManager().temperature.toStringAsFixed(1)}°',
                       style: kTempTextStyle,
                     ),
                     Text(
@@ -61,6 +81,11 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ],
                 ),
+              ),
+              Text(
+                // '${WeatherManager().temperature.floor()}°',
+                '${WeatherManager().cityName}',
+                style: kMessageTextStyle,
               ),
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
