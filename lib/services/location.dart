@@ -1,8 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 
 class LocationManager {
+  Function _callbackFcn;
   Position _position;
 
+// Boilerplate code that make a singleton (don't delete)
   static final LocationManager _instance =
       LocationManager._privateConstructor();
   LocationManager._privateConstructor();
@@ -11,6 +13,7 @@ class LocationManager {
   }
 
   beginListening(Function callbackFcn) {
+    _callbackFcn = callbackFcn;
     try {
       Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.low)
           .listen((Position position) {
@@ -21,8 +24,8 @@ class LocationManager {
                 ', ' +
                 position.longitude.toString();
         print("New Position: " + positionString);
-        if (callbackFcn != null) {
-          callbackFcn();
+        if (_callbackFcn != null) {
+          _callbackFcn();
         }
       });
     } catch (e) {
@@ -31,7 +34,9 @@ class LocationManager {
     }
   }
 
-  stopListening() {}
+  stopListening() {
+    _callbackFcn = null;
+  }
 
   double get latitude {
     return _position?.latitude;

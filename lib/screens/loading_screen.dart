@@ -38,7 +38,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     print("Outside Temp F = ${WeatherManager().temperature}");
     print("Outside Icon = ${WeatherManager().weatherIcon}");
     print("Outside Message = ${WeatherManager().message}");
-
+    LocationManager().stopListening();
     Navigator.pushNamed(context, "/location");
   }
 
