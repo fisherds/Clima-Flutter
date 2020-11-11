@@ -1,6 +1,7 @@
 import 'package:clima/services/location.dart';
 import 'package:clima/services/weather.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -39,14 +40,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
     print("Outside Icon = ${WeatherManager().weatherIcon}");
     print("Outside Message = ${WeatherManager().message}");
     LocationManager().stopListening();
-    Navigator.pushNamed(context, "/location");
+    //Navigator.pushNamed(context, "/location");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Loading"),
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100.0,
+        ),
       ),
     );
   }

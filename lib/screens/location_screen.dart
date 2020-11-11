@@ -37,7 +37,9 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/city");
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,

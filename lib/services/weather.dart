@@ -2,6 +2,7 @@ import "package:http/http.dart" as http;
 import "dart:convert" as convert;
 
 class WeatherManager {
+  // Boilerplate code to make a Singleton
   static final WeatherManager _instance = WeatherManager._privateConstructor();
   WeatherManager._privateConstructor();
   factory WeatherManager() {
